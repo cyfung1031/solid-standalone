@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Runtime Global Example</title>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+</html>
+<script src="../html.min.js"></script>
+<script>
+    const { createSignal, onMount } = Solid;
+    const { html, render } = SolidDOM;
+
+    const myValue = { b11: { s: 1 }, a: 5, b: 9 };
+
+
+
+    const shallowReactive = (data) => {
+
+      const [rtGet, rtSet] = createSignal(1);
+
+      const dts = {
+        [`${rtGet()}`]: data
+      }
+
+      return [
+        new Proxy({}, {
+          get(target, prop, handler) {
+            return dts[`${rtGet()}`][prop];
+          }
+        }),
+        (newData) => {
+          const ptag = rtGet();
+          const tag = ((+ptag) % 9) + 1;
+          dts[`${tag}`] = newData;
+          rtSet(tag);
+          delete dts[`${ptag}`];
+        }
+      ];
+
+
+    }
+
+    const [myValueReactive, myValueSet] = shallowReactive(myValue);
+
+    const ra = (() => {
+
+      let ga, ra;
+      ga = {
+        get(target, prop, handler) {
+          return new Proxy(() => {
+            let o = typeof target === 'function' ? target() : target;
+            return o[prop];
+          }, ga);
+        }
+      };
+      ra = (proxy) => {
+        return new Proxy(proxy, ga);
+      }
+
+      return ra;
+
+    })();
+
+    const createSolidElement = (() => {
+      const dummy = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+
+      return ((p) => {
+
+        return new Promise(resolve => {
+
+          let dispose;
+          const o = {};
+
+
+
+          const App = () => {
+            const [counter, setCounter] = createSignal(0);
+            const [bb1, $el] = createSignal(0);
+            setInterval(() => setCounter(c => c + 1), 1000);
+            onMount(() => {
+              o.dom = bb1();
+              if (o.dom && o.dispose) resolve(o);
+            });
+            return p({ counter, $el, myValueReactiveX: ra(myValueReactive) });
+          }
+          o.dispose = render(App, dummy);
+          if (o.dom && o.dispose) resolve(o);
+        })
+
+      })
+    })();
+
+    const p = ({ $el, myValueReactiveX, counter }) => {
+      return html`<div ref=${$el}>
+        <div>${myValueReactiveX.b11.s}</div>
+        <div>${myValueReactiveX.a}</div>
+        <div>${myValueReactiveX.b}</div>
+        ${counter}
+        </div>`;
+    }
+
+    (async () => {
+      const solid = await createSolidElement(p);
+      console.log('dom', solid)
+      document.body.appendChild(solid.dom)
+
+      setTimeout(() => {
+
+        console.log(11, myValueReactive)
+        myValueSet({ b11: { s: 199 }, a: 5, b: 9 })
+        console.log(22, myValueReactive)
+
+      }, 1000)
+
+    })()
+
+</script>
