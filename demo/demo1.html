@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Runtime Global Example</title>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+</html>
+<script src="../html.min.js"></script>
+<script>
+  const { createState } = Solid;
+  const { html, render } = SolidDOM;
+
+  const App = () => {
+    const [state, setState] = createState({counter: 0});
+    setInterval(() => setState('counter', c => c + 1), 1000);
+    return html`<div>${() => state.counter}</div>`;
+  }
+  render(App, document.body);
+</script>
