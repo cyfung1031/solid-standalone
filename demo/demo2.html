@@ -11,13 +11,13 @@
 </html>
 <script src="../h.min.js"></script>
 <script>
-  const { createState } = Solid;
+  const { createSignal } = Solid;
   const { h, render } = SolidDOM;
 
   const App = () => {
-    const [state, setState] = createState({counter: 0});
-    setInterval(() => setState('counter', c => c + 1), 1000);
-    return h('div', () => state.counter);
+    const [counter, setCounter] = createSignal(0);
+    setInterval(() => setCounter(c => c + 1), 1000);
+    return h('div', () => counter());
   }
   render(App, document.body);
 </script>
