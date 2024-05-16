@@ -8,13 +8,13 @@ With ESM in the browser this module isn't really needed anymore and will no long
 ```html
 <script src="https://unpkg.com/solid-standalone/html.min.js"></script>
 <script>
-  const { createState } = Solid;
+  const { createSignal } = Solid;
   const { html, render } = SolidDOM;
 
   const App = () => {
-    const [state, setState] = createState({counter: 0});
-    setInterval(() => setState('counter', c => c + 1), 1000);
-    return html`<div>${() => state.counter}</div>`;
+    const [counter, setCounter] = createSignal(0);
+    setInterval(() => setCounter(c => c + 1), 1000);
+    return html`<div>${() => counter()}</div>`;
   }
   render(App, document.body);
 </script>
@@ -24,13 +24,13 @@ With ESM in the browser this module isn't really needed anymore and will no long
 ```html
 <script src="https://unpkg.com/solid-standalone/h.min.js"></script>
 <script>
-  const { createState } = Solid;
+  const { createSignal } = Solid;
   const { h, render } = SolidDOM;
 
   const App = () => {
-    const [state, setState] = createState({counter: 0});
-    setInterval(() => setState('counter', c => c + 1), 1000);
-    return h('div', () => state.counter);
+    const [counter, setCounter] = createSignal(0);
+    setInterval(() => setCounter(c => c + 1), 1000);
+    return h('div', () => counter());
   }
   render(App, document.body);
 </script>
