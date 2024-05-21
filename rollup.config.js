@@ -5,15 +5,15 @@ import terser from '@rollup/plugin-terser';
 export default [{
   input: 'src/html.js',
   output: {
-    file: 'html.min.js',
+    file: 'dist/html.min.js',
     format: 'iife'
   },
   plugins: [nodeResolve(), commonjs(), terser()]
-}, {
-  input: 'src/h.js',
+},{
+  input: 'src/html.js',
   output: {
-    file: 'h.min.js',
-    format: 'iife',
+    file: 'dist/html.js',
+    format: 'iife'
   },
-  plugins: [nodeResolve(), commonjs(), terser()]
+  plugins: [nodeResolve(), commonjs()]
 }];
