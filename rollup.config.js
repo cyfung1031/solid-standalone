@@ -3,17 +3,31 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 
 export default [{
-  input: 'src/html.js',
+  input: 'src/atomic.js',
   output: {
-    file: 'html.min.js',
+    file: 'dist/atomic.min.js',
     format: 'iife'
   },
   plugins: [nodeResolve(), commonjs(), terser()]
 }, {
-  input: 'src/h.js',
+  input: 'src/atomic.js',
   output: {
-    file: 'h.min.js',
+    file: 'dist/atomic.js',
     format: 'iife',
   },
+  plugins: [nodeResolve(), commonjs()]
+},{
+  input: 'src/reactive.js',
+  output: {
+    file: 'dist/reactive.min.js',
+    format: 'iife'
+  },
   plugins: [nodeResolve(), commonjs(), terser()]
+}, {
+  input: 'src/reactive.js',
+  output: {
+    file: 'dist/reactive.js',
+    format: 'iife',
+  },
+  plugins: [nodeResolve(), commonjs()]
 }];
