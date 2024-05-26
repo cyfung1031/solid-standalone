@@ -2333,7 +2333,8 @@
       Show,
       onCleanup,
       createComputed,
-      createDeferred
+      createDeferred,
+      createRenderEffect
   };
 
   self.SolidJS = SolidJS;
