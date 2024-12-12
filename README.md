@@ -6,6 +6,8 @@
 
  - See https://github.com/solidjs-web/SolidJS-Web
 
+This repo is archived and only served for PR to https://github.com/ryansolid/solid-standalone
+
 -----------
 
 ## Tagged Template Literals
