@@ -1,8 +1,12 @@
 # Solid.js Standalone
 
-## Deprecated!
+2024/12/13 Update:
 
-With ESM in the browser this module isn't really needed anymore and will no longer be maintained. You can import the `h` and `html` functions directly from `solid-js`.
+ - Changed from Rollup to Vite 6 to build SolidJS 1.9.3
+
+ - See https://github.com/solidjs-web/SolidJS-Web
+
+-----------
 
 ## Tagged Template Literals
 ```html
